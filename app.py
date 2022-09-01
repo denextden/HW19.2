@@ -42,6 +42,7 @@ def create_data(app, db):
             db.session.commit()
             db.session.close()
 
+
 app = create_app(Config())
 app.debug = True
 
