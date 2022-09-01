@@ -17,7 +17,9 @@ class UsersView(Resource):
     def post(self):
         req_json = request.json
         user = user_service.create_user(req_json)
-        return user, 201
+        if user.username not in req_json:
+            return UserSchema().dump(user), 201
+        return 'такой пользователь уже существует', 400
 
 
 @user_ns.route('/<int:uid>')

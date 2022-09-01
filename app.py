@@ -33,12 +33,14 @@ def create_data(app, db):
     with app.app_context():
         db.create_all()
 
-        u1 = User(username="vasya", password="my_little_pony", role="user")
-        u2 = User(username="oleg", password="qwerty", role="user")
-        u3 = User(username="oleg", password="P@ssw0rd", role="admin")
+        u1 = User(username="Max", password="mylittlepony", role="user")
+        u2 = User(username="Vera", password="qwertyqwerty", role="user")
+        u3 = User(username="Nicolas", password="Password", role="admin")
 
         with db.session.begin():
             db.session.add_all([u1, u2, u3])
+            db.session.commit()
+            db.session.close()
 
 
 app = create_app(Config())

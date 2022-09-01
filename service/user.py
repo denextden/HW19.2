@@ -24,12 +24,12 @@ class UserService:
         return base64.b64encode(hash_digest)
 
     def get_hash(self, password):
-        return hashlib.pbkdf2_hmac(
+        return base64.b64encode(hashlib.pbkdf2_hmac(
             'sha256',
             password.encode('utf-8'),
             PWD_HASH_SALT,
             PWD_HASH_ITERATIONS
-        )
+        ))
 
     def create_user(self, user):
         user['password'] = self.get_hash(user['password'])
@@ -38,7 +38,7 @@ class UserService:
     def compare_passwords(self, password_hash, other_password):
         return hmac.compare_digest(
             base64.b64decode(password_hash),
-            self.get_hash(other_password))
+            base64.b64decode(self.get_hash(other_password)))
 
     def update(self, user):
         self.dao.update(user)
